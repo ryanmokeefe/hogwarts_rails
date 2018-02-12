@@ -9,23 +9,34 @@ class HousesController < ApplicationController
     
   end
 
-  # def new
+  def new
+    @house = House.new
+  end
 
-  # end
+  def create
+    @house = House.create!(house_params)
+    redirect_to house_path(@house)
+  end
 
-  # def create
+  def edit
+    @house = House.find(params[:id])
+  end
 
-  # end
-
-  # def edit
-
-  # end
-
-  # def update
-    
-  # end
+  def update
+    @house = House.find(params[:id])    
+    @house.update(house_params)
+    redirect_to house_path(@house)
+  end
   
-  # def destroy
+  def destroy
+    @house = House.find(params[:id])
+    @house.destroy
+    redirect_to houses_path
     
-  # end
+  end
+
+private
+  def house_params
+    params.require(:house).permit(:name, :image_url)
+  end
 end
